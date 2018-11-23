@@ -52,6 +52,5 @@ export default handleActions({
         produce(state, draft => {
             draft.todoList.splice(draft.todoList.findIndex(item => item.id === action.payload), 1)
         })
-    },
-    initialState
-})
+    }
+}, initialState)
