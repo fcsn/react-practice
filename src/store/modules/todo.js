@@ -1,27 +1,32 @@
 import {createAction, handleActions} from 'redux-actions'
 import produce from 'immer'
 
-let id = 3;
+const CHANGE_INPUT = 'todo/CHANGE_INPUT'
+const CREATE = 'todo/CREATE'
+const TOGGLE = 'todo/TOGGLE'
+const REMOVE = 'todo/REMOVE'
 
-const CHANGE_INPUT = createAction('todo/CHANGE_INPUT', text => text);
-const CREATE = createAction('todo/CREATE', text => ({text, id: id++}));
-const TOGGLE = createAction('todo/TOGGLE', id => id);
-const REMOVE = createAction('todo/REMOVE', id => id);
+let id = 3;
+// createAction 으로 액션 생성함수 정의
+export const changeInput = createAction(CHANGE_INPUT, text => text);
+export const create = createAction(CREATE, text => ({ text, id: id++ }));
+export const toggle = createAction(TOGGLE, id => id);
+export const remove = createAction(REMOVE, id => id);
 
 const initialState = {
     input: '',
     todoList: [
         {
             id: 0,
-            content: '',
+            content: '와이와이',
             isCompleted: false
         }, {
-            id: 0,
-            content: '',
+            id: 1,
+            content: '허허',
             isCompleted: false
         }, {
-            id: 0,
-            content: '',
+            id: 2,
+            content: '훔킈훔킈',
             isCompleted: false
         }
     ]
@@ -29,7 +34,7 @@ const initialState = {
 
 export default handleActions({
     [CHANGE_INPUT]: (state, action) => {
-        produce(state, draft => draft.input = action.payload)
+        produce(state, draft => {draft.input = action.payload})
     },
     [CREATE]: (state, action) => {
         produce(state, draft => {

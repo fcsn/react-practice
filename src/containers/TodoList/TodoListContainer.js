@@ -6,11 +6,28 @@ import * as todoActions from '../../../src/store/modules/todo'
 import TodoList from '../../../src/components/TodoList/TodoList';
 
 class TodoListContainer extends React.Component {
+    handleChange = e => {
+        const {TodoActions} = this.props
+        TodoActions.changeInput(e.target.value)
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        const { TodoActions, input } = this.props
+        TodoActions.create(input)
+        TodoActions.changeInput("")
+    };
+
     render () {
+        const {todoList, TodoActions, input} = this.props
         return (
             <div>
                 {JSON.stringify(this.props)}
-                <TodoList/>
+                <TodoList todoList={todoList}
+                          input={input}
+                          onChange={this.handleChange}
+                          onSubmit={this.handleSubmit}/>
+                {/*<TodoList/>*/}
             </div>
         )
     }
