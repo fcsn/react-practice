@@ -1,14 +1,19 @@
 import React from 'react';
 import './TodoList.css';
 
-const TodoItem = ({item}) => {
+const TodoItem = ({item, onRemove}) => {
     return (
-        <div>{item.id}. {item.content}</div>
+        <div>
+        <div>{item.id + 1}. {item.content}</div>
+        <button onClick={onRemove}>삭제</button>
+        </div>
     )
 }
 
-const TodoList = ({todoList, TodoActions, onChange, onSubmit, input}) => {
-        const todoItems = todoList.map(item => <TodoItem item={item} key={item.id}/>)
+const TodoList = ({todoList, TodoActions, onChange, onSubmit, onRemove, input}) => {
+        const todoItems = todoList.map(item => <TodoItem item={item}
+                                                         key={item.id}
+                                                         onRemove={() => onRemove(item.id)}/>)
         return (
             <div>
                 <form onSubmit={onSubmit}>

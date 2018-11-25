@@ -16,7 +16,12 @@ class TodoListContainer extends React.Component {
         const { TodoActions, input } = this.props
         TodoActions.create(input)
         TodoActions.changeInput("")
-    };
+    }
+
+    handleRemove = id => {
+        const {todoActions} = this.props
+        todoActions.remove(id)
+    }
 
     render () {
         const {todoList, TodoActions, input} = this.props
@@ -26,7 +31,8 @@ class TodoListContainer extends React.Component {
                 <TodoList todoList={todoList}
                           input={input}
                           onChange={this.handleChange}
-                          onSubmit={this.handleSubmit}/>
+                          onSubmit={this.handleSubmit}
+                          onRemove={this.handleRemove}/>
                 {/*<TodoList/>*/}
             </div>
         )
@@ -38,7 +44,6 @@ const mapStateToProps = ({ todo }) => ({
     todoList: todo.todoList
 });
 
-// 이런 구조로 하면 나중에 다양한 리덕스 모듈을 적용해야 하는 상황에서 유용합니다.
 const mapDispatchToProps = dispatch => ({
     TodoActions: bindActionCreators(todoActions, dispatch),
     // AnotherActions: bindActionCreators(anotherActions, dispatch)
