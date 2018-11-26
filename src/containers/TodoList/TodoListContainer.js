@@ -8,19 +8,20 @@ import TodoList from '../../../src/components/TodoList/TodoList';
 class TodoListContainer extends React.Component {
     handleChange = e => {
         const {TodoActions} = this.props
+        if (e.target.value !== 0)
         TodoActions.changeInput(e.target.value)
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        const { TodoActions, input } = this.props
+        const {TodoActions, input} = this.props
         TodoActions.create(input)
         TodoActions.changeInput("")
     }
 
     handleRemove = id => {
-        const {todoActions} = this.props
-        todoActions.remove(id)
+        const {TodoActions} = this.props
+        TodoActions.remove(id)
     }
 
     render () {
@@ -28,6 +29,13 @@ class TodoListContainer extends React.Component {
         return (
             <div>
                 {JSON.stringify(this.props)}
+                <form onSubmit={this.handleSubmit}>
+                    dsd
+                    <input type="text"
+                           value={input}
+                           onChange={this.handleChange}/>
+                    <button>등록</button>
+                </form>
                 <TodoList todoList={todoList}
                           input={input}
                           onChange={this.handleChange}

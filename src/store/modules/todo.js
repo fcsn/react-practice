@@ -33,10 +33,10 @@ const initialState = {
 }
 
 export default handleActions({
-    [CHANGE_INPUT]: (state, action) => {
+    [CHANGE_INPUT]: (state, action) =>
         produce(state, draft => {draft.input = action.payload})
-    },
-    [CREATE]: (state, action) => {
+    ,
+    [CREATE]: (state, action) =>
         produce(state, draft => {
             const item = {
                 // payload가 하나면 action.payload로 바로 불러오지만 payload가 두 개 이상이면 객체로 들어가서 action.payload.first 이렇게 불러와야 합니다.
@@ -46,16 +46,15 @@ export default handleActions({
             }
             draft.todoList.push(item)
         })
-    },
-    [TOGGLE]: (state, action) => {
+    ,
+    [TOGGLE]: (state, action) =>
         produce(state, draft => {
             const item = draft.todoList.find(item => item.id === action.payload)
             item.isCompleted = !item.isCompleted
         })
-    },
-    [REMOVE]: (state, action) => {
+    ,
+    [REMOVE]: (state, action) =>
         produce(state, draft => {
             draft.todoList.splice(draft.todoList.findIndex(item => item.id === action.payload), 1)
         })
-    }
 }, initialState)
