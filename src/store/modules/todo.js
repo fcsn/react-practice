@@ -44,7 +44,11 @@ export default handleActions({
                 id: action.payload.id,
                 isCompleted: false
             }
-            draft.todoList.push(item)
+            if (action.payload.text.length !== 0) {
+                draft.todoList.push(item)
+            } else {
+                alert('빈칸이어요')
+            }
         })
     ,
     [TOGGLE]: (state, action) =>
