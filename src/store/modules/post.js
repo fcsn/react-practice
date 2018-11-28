@@ -1,10 +1,11 @@
 import {createAction, handleActions} from 'redux-actions';
 import axios from 'axios';
 import produce from 'immer';
+import {getPostAPI} from '../../../src/api/post'
 
-function getPostAPI (num) {
-    return axios.get(`https://jsonplaceholder.typicode.com/posts/${num}`)
-}
+// function getPostAPI (num) {
+//     return axios.get(`https://jsonplaceholder.typicode.com/posts/${num}`)
+// }
 
 const GET_POST_PENDING = 'post/GET_POST_PENDING'
 const GET_POST_SUCCESS = 'post/GET_POST_SUCCESS'
