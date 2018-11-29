@@ -1,11 +1,6 @@
 import {createAction, handleActions} from 'redux-actions';
-import axios from 'axios';
 import produce from 'immer';
 import {getPostAPI} from '../../../src/api/post'
-
-// function getPostAPI (num) {
-//     return axios.get(`https://jsonplaceholder.typicode.com/posts/${num}`)
-// }
 
 const GET_POST_PENDING = 'post/GET_POST_PENDING'
 const GET_POST_SUCCESS = 'post/GET_POST_SUCCESS'
@@ -15,7 +10,7 @@ const getPostPending = () => ({type: GET_POST_PENDING})
 const getPostSuccess = (text) => ({type: GET_POST_SUCCESS, payload: text})
 const getPostFailure = () => ({type: GET_POST_FAILURE})
 
-export const getPost = (num) => (
+export const getPost = num => (
     (dispatch, getState) => {
     dispatch(getPostPending())
     return getPostAPI(num)
@@ -38,14 +33,17 @@ const initialState = {
 }
 
 export default handleActions({
-    // [GET_POST_PENDING]: (state, action) =>
-    //     produce(state, draft =>
-    //         draft.pending = true
-    //     )
+    [GET_POST_PENDING]: (state, action) => {
+        return {
+            ...state,
+            pending: true
+        };
+    },
+        // produce(state, draft =>
+        //     draft.pending = true
+        // )
     // ,
     [GET_POST_SUCCESS]: (state, action) => {
-        console.log(122)
-        console.dir(action)
         const { title, body } = action.payload.data;
         return {
             ...state,

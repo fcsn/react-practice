@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export const getUsersAPI = () => {
+export const getAllUsersAPI = () => {
     return axios.get(`https://jsonplaceholder.typicode.com/users`)
 }
 
-export const getUserAPI = (userId) => {
+export const getUserAPIByUserId = (userId) => {
     return axios.get(`https://jsonplaceholder.typicode.com/users?id=${userId}`)
 }

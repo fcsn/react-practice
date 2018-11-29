@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getPostsAPI = (num) => {
+export const getAllPostsAPI = () => {
     return axios.get(`https://jsonplaceholder.typicode.com/posts`)
 }
 
