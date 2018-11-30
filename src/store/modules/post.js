@@ -12,15 +12,15 @@ const getPostFailure = () => ({type: GET_POST_FAILURE})
 
 export const getPost = num => (
     (dispatch, getState) => {
-    dispatch(getPostPending())
-    return getPostAPI(num)
-    .then(text => {
-          dispatch(getPostSuccess(text))
-          return text
-    })
-    .catch(err => {
-        dispatch(getPostFailure())
-    })
+        dispatch(getPostPending())
+        return getPostAPI(num)
+        .then(text => {
+              dispatch(getPostSuccess(text))
+              return text
+        })
+        .catch(err => {
+            dispatch(getPostFailure())
+        })
 })
 
 const initialState = {

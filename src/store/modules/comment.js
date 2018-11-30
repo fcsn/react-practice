@@ -12,6 +12,7 @@ const getCommentFailure = () => ({type: GET_COMMENT_FAILURE})
 
 export const getComment = postId => (
     (dispatch, getState) => {
+        console.log(getState().post.data)
         dispatch(() => getCommentLoading())
         return getCommentAPIByPostId(postId)
         .then(text => dispatch(getCommentSuccess(text)))
