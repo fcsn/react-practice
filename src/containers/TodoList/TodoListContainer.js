@@ -6,6 +6,7 @@ import * as postActions from '../../../src/store/modules/post'
 import * as userActions from '../../../src/store/modules/user'
 import * as commentActions from '../../../src/store/modules/comment'
 import * as photoActions from '../../../src/store/modules/photo'
+import { Card, Button, CardTitle, CardText } from 'reactstrap';
 
 import TodoList from '../../../src/components/TodoList/TodoList';
 
@@ -36,10 +37,11 @@ class TodoListContainer extends React.Component {
 
     componentDidMount () {
         const {PostActions, UserActions, CommentActions, PhotoActions} = this.props
+        PhotoActions.getPhoto(1)
         PostActions.getPost(1)
         UserActions.getUser(1)
         CommentActions.getComment(1)
-        PhotoActions.getPhoto(1)
+        PostActions.getPostById(1)
     }
 
     render () {
@@ -52,6 +54,7 @@ class TodoListContainer extends React.Component {
             post,
             postLoading,
             postError,
+            postList,
             //comment
             comment,
             //user
@@ -63,33 +66,75 @@ class TodoListContainer extends React.Component {
             photoError,
             photoLoading} = this.props
 
+        const PostView = () => {
+            const {post, postLoading, postError} = this.props
+            if (postLoading) {
+                console.log(postLoading)
+                return (
+                    <Card body className="text-center">
+                        <CardTitle>loading...</CardTitle>
+                        <CardText>Now loading</CardText>
+                        <Button>...</Button>
+                    </Card>
+                )
+            } else if (postError) {
+                return (
+                    <Card body className="text-center">
+                        <CardTitle>No Data</CardTitle>
+                        <CardText>Not found</CardText>
+                    </Card>
+                )
+            } else {
+                return (
+                    <Card body className="text-center">
+                        <CardTitle>{post.title}</CardTitle>
+                        <CardText>{post.body}</CardText>
+                        <Button>Go somewhere</Button>
+                    </Card>
+                )
+            }
+        }
+
+        const PostListView = () => {
+            const {postList} = this.props
+            return postList.map(post =>
+                <div key={post.id} style={{maxWidth: 800}}>
+                    <Card body className="text-center" style={{marginTop: 50, display: 'flex', justifyContent: 'center'}}>
+                        <CardTitle>{post.title}</CardTitle>
+                        <CardText style={{fontWeight: 'lighter'}}>{post.body}</CardText>
+                        <div>
+                        <Button style={{maxWidth: 300}}>Go Post</Button>
+                        </div>
+                    </Card>
+                </div>
+            )
+        }
+
         return (
-            <div>
-                {/*{JSON.stringify(this.props.user.user)}*/}
-                {/*comment: {JSON.stringify(this.props.comment)}*/}
-                {postLoading && <h1>시방 post로딩중</h1>}
-                {postError ?
-                    <h1>에러라능!</h1>
-                    : <div>
-                      <h1>{post.title}</h1>
-                      <div>{post.body}</div>
-                      <h2>{String(user.user)}</h2>
-                      </div>
-                }
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                {/*<div style={{maxWidth: 800, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>*/}
+                    {/*<PostView/>*/}
+                {/*</div>*/}
+
+                <PostListView/>
+
+                <h1>user</h1>
                 {userLoading && <h1>시방 user로딩중</h1>}
                 {userError ?
                     <h1>user에러라능!</h1>
                     :
                     <div>
-                    {String(user.user)}
+                        {JSON.stringify(user.user[0])}
                     </div>
                 }
+
+                <h1>photo</h1>
                 {photoLoading && <h1>시방 photo로딩중</h1>}
                 {photoError ?
                     <h1>photo에러라능!</h1>
                     :
                     <div>
-                    {String(photo)}
+                    {JSON.stringify(photo[0])}
                     </div>
                 }
                 <form onSubmit={this.handleSubmit}>
@@ -120,9 +165,10 @@ const mapStateToProps = ({ todo, post, user, comment, photo }) => ({
     comment: comment,
     userError: user.error,
     userLoading: user.loading,
-    photo: photo,
+    photo: photo.photo,
     photoError: photo.error,
-    photoLoading: photo.loading
+    photoLoading: photo.loading,
+    postList: post.posts
 });
 
 const mapDispatchToProps = dispatch => ({

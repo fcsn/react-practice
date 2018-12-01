@@ -25,7 +25,7 @@ export const getUser = userId => (
 })
 
 const initialState = {
-        user: null,
+        user: [],
         error: false,
         loading: false
 }

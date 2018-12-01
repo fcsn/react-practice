@@ -20,7 +20,7 @@ export const getPhoto = albumId => (
 )
 
 const initialState = {
-    photo: null,
+    photo: [],
     error: false,
     loading: false
 }
